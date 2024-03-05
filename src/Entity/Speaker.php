@@ -2,8 +2,9 @@
 
 namespace App\Entity;
 
-use App\Repository\SpeakerRepository;
+
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\SpeakerRepository;
 
 #[ORM\Entity(repositoryClass: SpeakerRepository::class)]
 class Speaker
@@ -121,5 +122,10 @@ class Speaker
         $this->event = $event;
 
         return $this;
+    }
+
+public function fullName(): string
+    {
+        return $this->getFirstname() . ' ' . $this->getLastname();
     }
 }
