@@ -19,8 +19,7 @@ class Event
     #[ORM\Column(length: 80)]
     private ?string $name = null;
 
-    #[ORM\Column(length: 80)]
-    private ?string $date = null;
+   
 
     #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 2)]
     private ?string $price = null;
@@ -36,6 +35,9 @@ class Event
 
     #[ORM\OneToMany(targetEntity: Speaker::class, mappedBy: 'event')]
     private Collection $speakers;
+
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    private ?\DateTimeInterface $date = null;
 
     public function __construct()
     {
@@ -59,18 +61,7 @@ class Event
         return $this;
     }
 
-    public function getDate(): ?string
-    {
-        return $this->date;
-    }
-
-    public function setDate(string $date): static
-    {
-        $this->date = $date;
-
-        return $this;
-    }
-
+ 
     public function getPrice(): ?string
     {
         return $this->price;
@@ -145,6 +136,18 @@ class Event
                 $speaker->setEvent(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getDate(): ?\DateTimeInterface
+    {
+        return $this->date;
+    }
+
+    public function setDate(\DateTimeInterface $date): static
+    {
+        $this->date = $date;
 
         return $this;
     }
