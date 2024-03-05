@@ -1,5 +1,5 @@
 import './bootstrap.js';
-import './bootstrap.bundle.min.js';
+import './js/bootstrap.bundle.min.js';
 
 /*
  * Welcome to your app's main JavaScript file!
