@@ -36,27 +36,38 @@ class AppFixtures extends Fixture
             'Web security, how to protect ?',
             'Web performance, how to optimize ?',
         ];
-        foreach ($events as $item) {
+        // Les speakers
+       // Création de 40 speakers
+       $speakerArray = [];
+       for ($i=1; $i < 41; $i++) { 
+           $speaker = new Speaker();
+           $speaker->setFirstname($faker->firstName)
+               ->setLastname($faker->lastName)
+               ->setJob($faker->jobTitle)
+               ->setCompany($faker->company)
+               ->setExperience($faker->numberBetween(1, 20))
+               ->setImage('https://randomuser.me/api/portraits/men/'. $i .'.jpg')
+               ;
+               array_push($speakerArray, $speaker);
+               $manager->persist($speaker);
+       }
+        // Boucle pour créer 20 événements
+        for ($i=0; $i < count($events); $i++) { 
+            
             $event = new Event();
-            $event->setName($item)
+            $event->setName($events[$i])
                 ->setTheme('Web development')
                 ->setDate($faker->dateTimeBetween('-6 months', '+6 months'))
                 ->setLocation($faker->city)
                 ->setAttendee($faker->numberBetween(10, 100))
                 ->setPrice($faker->numberBetween(0, 250))
+                ->addSpeaker($speakerArray[$i])
                 ;
             $manager->persist($event);
         }
+        
 
-         $event = new Event();
-         $event->setName('Frontend Masters')
-         ->setTheme('Web development')
-         ->setDate(new DateTime('2021-10-10'))
-         ->setLocation('paris')
-         ->setAttendee(30)
-         ->setPrice(100.00)
-         ;
-         $manager->persist($event);
+         
 
         $manager->flush();
     }
