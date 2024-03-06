@@ -206,3 +206,47 @@ Avec cette fixture, on crée 40 speakers et 20 événements. On utilise Faker po
 ```bash
 symfony console doctrine:fixtures:load
 ```
+
+## Mise en place du back-office
+
+Pour mettre le back-office en place, on utilise EasyAdmin. L'instalaation se fait avec la commande suivante :
+
+```bash
+composer require easycorp/easyadmin-bundle
+```
+
+Suite à cela on configure le tableau de bord (Dashboard) avec la commande suivante :
+
+```bash
+symfony console make:admin:dashboard
+```
+
+Puis on se rend dans le  fichier de controlleur généré "DashboardController.php" :
+
+```php
+   #[Route('/admin', name: 'admin')]
+    public function index(): Response
+    {
+        // Option 3. Vous pouvez rendre un modèle personnalisé pour afficher un tableau de bord approprié avec des widgets, etc. 
+        // (astuce : c'est plus facile si votre modèle s'étend de @EasyAdmin/page/content.html.twig)
+        // Alors créez un fichier twig dans le dossier templates/admin/dashboard.html.twig et étendez-le de @EasyAdmin/page/content.html.twig
+        return $this->render('admin/dashboard.html.twig');
+    }
+```
+
+### Lier les entités à EasyAdmin
+
+Pour lier les eentités de votre choix avec le back-office, on utilise la commande suivante :
+
+```bash
+symfony console make:admin:crud
+```
+
+Il suffit de sélection l'entité dans la liste proposée et de suivre les instructions.
+Une fois fait, afin d'afficher l'entité dans le dashboard, on modifie le "DashboardController.php", au niveau de la méthode `configureMenuItems()` :
+
+```php
+    // ...
+        yield MenuItem::linkToCrud('Events', 'fas fa-list', Event::class);
+    // ...
+```
