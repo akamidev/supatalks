@@ -4,9 +4,11 @@
 
 {% block body %}
 
-{# {{dump(events)}}
-{{dump(speakers)}} #}
+ {# {{dump(events)}}
+{{dump(speakers)}}  #}
 
+{% include 'navbar/navbar.html.twig' %}
+...
 
 	<section class="pt-4 pt-md-11">
 		<div class="container">
@@ -128,4 +130,5 @@
 	<div class="m-auto row w-100">
         {{ include('components/event-card.html.twig') }}
     </div>
+	{% include 'footer/footer.html.twig' %}
 {% endblock %}
